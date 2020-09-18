@@ -1,0 +1,43 @@
+---
+title: "US Arrests in 1973"
+logo: arrests.jpeg
+date: '2020-09-18'
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Data
+
+Data for this presentation was obtained from the USArrests dataset that comes with base R. 
+
+It contains statistics, in arrests per 100,000 residents for assault, murder, and rape in each of the 50 US states in 1973. Also given is the percent of the population living in urban areas.
+
+Let's take a quick look at it:
+
+```{r, result="asis"}
+head(USArrests)
+```
+
+## Plot data with Plotly 
+
+```{r, warning=FALSE,message=FALSE}
+library(plotly)
+
+plot_ly(x = ~USArrests$Murder,
+        y = ~USArrests$Assault, 
+        z = ~USArrests$Rape,
+        type = "scatter3d",
+        size = ~USArrests$UrbanPop,
+        name= row.names(USArrests),
+        mode = "markers") %>% 
+  layout(title = "US Arrests in 1973",
+         scene = list(
+                 xaxis = list(title = "x: Murder"), 
+                 yaxis = list(title = "y: Assault"), 
+                 zaxis = list(title = "z: Rape")))
+
+```
+
